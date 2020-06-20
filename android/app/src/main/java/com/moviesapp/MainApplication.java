@@ -45,6 +45,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    /* TODO: This is used for facebook log app events - should be considered in necessary: https://developers.facebook.com/docs/app-events/ */
+    //    FacebookSdk.sdkInitialize(getApplicationContext());
+    //    AppEventsLogger.activateApp(this);
   }
 
   /**
