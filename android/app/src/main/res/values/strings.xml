@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">moviesApp</string>
+    <string name="facebook_app_id">2669066880061887</string>
+    <string name="fb_login_protocol_scheme">fb2669066880061887</string>
+    <string name="server_client_id">1000272866334-c5nlk962vrjppo8csrlgddgg23p22cm9.apps.googleusercontent.com</string>
+</resources>
