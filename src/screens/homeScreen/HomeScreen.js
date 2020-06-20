@@ -28,7 +28,7 @@ const HomeScreen = () => {
     const username = useSelector(authSelectors.usernameSelector);
     return (
         <Container>
-            <Title>Hello {username}!</Title>
+            { !isLoading && <Title>Hello { username }!</Title> }
             { isLoading || !username ? <Loader/> :
                 <AppGeneralButton title={ 'Logout?' } onPress={ handleLogout }/>
             }

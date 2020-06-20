@@ -13,12 +13,6 @@ import { GoogleSignin, statusCodes, } from '@react-native-community/google-signi
 //     forceCodeForRefreshToken: true
 // });
 
-GoogleSignin.configure({
-    webClientId: '1000272866334-tk46i8ci29b713l6n8cg73chq4qk0qcm.apps.googleusercontent.com',
-    offlineAccess: true,
-    forceCodeForRefreshToken: true
-});
-
 const buttonBackground = "#cf0028"
 const GoogleButton = ({ onPress }) => {
     const dispatch = useDispatch();
@@ -55,9 +49,13 @@ const GoogleButton = ({ onPress }) => {
         }
     };
     useEffect(() => {
-        setTimeout(() => {
+        setTimeout(async () => {
             console.log('now!');
-            signIn();
+            // signIn();
+            await GoogleSignin.configure({
+                webClientId: '956395270084-kkg1ursf66d6up534c6l2cgf85kaqm8i.apps.googleusercontent.com',
+                offlineAccess: true,
+            });
         }, 2000);
     }, []);
     

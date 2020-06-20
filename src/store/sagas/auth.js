@@ -12,10 +12,12 @@ function* handleLoginSuccess() {
     console.log('success!');
 }
 
-GoogleSignin.configure();
-
 const googleSignOut = async () => {
     try {
+        await GoogleSignin.configure({
+            webClientId: '956395270084-kkg1ursf66d6up534c6l2cgf85kaqm8i.apps.googleusercontent.com',
+            offlineAccess: true,
+        });
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
     } catch (error) {
