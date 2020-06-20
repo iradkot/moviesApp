@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import * as authActions from 'store/actions/auth';
+import * as authActions from 'store/actions/auth.actions';
 import styled from "styled-components/native";
 import FacebookButton from 'screens/loginScreen/components/FacebookButton';
 import GoogleButton from "./components/GoogleButton";

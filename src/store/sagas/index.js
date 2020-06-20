@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
-import authSaga from './auth';
-import moviesSaga from './movies';
+import authSaga from './auth.saga';
+import moviesSaga from './movies.saga';
 
 
 

@@ -1,4 +1,4 @@
-import * as authConstants from 'store/constants/auth';
+import * as authConstants from 'store/constants/auth.constants';
 
 export const getToken = (payload) => ({
         type: authConstants.GET_TOKEN,
@@ -16,6 +16,7 @@ export const logout = () => ({
 export const logoutSuccess = () => ({
     type: authConstants.LOGOUT_SUCCESS
 });
-export const logoutFailed = () => ({
-    type: authConstants.LOGOUT_FAILED
+export const logoutFailed = error => ({
+    type: authConstants.LOGOUT_FAILED,
+    payload: error
 });

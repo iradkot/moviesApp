@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import IconButton from 'components/buttons/IconButton';
 import { GraphRequest, GraphRequestManager, LoginManager } from 'react-native-fbsdk';
 import { useDispatch } from 'react-redux';
-import * as authActions from 'store/actions/auth';
-import { loginMethods } from 'store/constants/auth';
+import * as authActions from 'store/actions/auth.actions';
+import { loginMethods } from 'store/constants/auth.constants';
 
 const buttonBackground = '#3b5998';
 const FacebookButton = () => {

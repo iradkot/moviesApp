@@ -1,17 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import IconButton from 'components/buttons/IconButton';
-import * as authActions from 'store/actions/auth';
-import { loginMethods } from 'store/constants/auth';
+import * as authActions from 'store/actions/auth.actions';
+import { loginMethods } from 'store/constants/auth.constants';
 
 import { GoogleSignin, statusCodes, } from '@react-native-community/google-signin';
-
-// GoogleSignin.configure({
-//     // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-//     webClientId: '1000272866334-0mrti0kumfvp4vvaq9mn4ngusput0pbh.apps.googleusercontent.com',
-//     offlineAccess: true,
-//     forceCodeForRefreshToken: true
-// });
+import config from 'config';
 
 const buttonBackground = "#cf0028"
 const GoogleButton = ({ onPress }) => {
@@ -30,6 +24,7 @@ const GoogleButton = ({ onPress }) => {
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
+            console.log({ userInfo });
             loginSuccess(userInfo)
         } catch (error) {
             console.log({ error });
@@ -53,7 +48,7 @@ const GoogleButton = ({ onPress }) => {
             console.log('now!');
             // signIn();
             await GoogleSignin.configure({
-                webClientId: '956395270084-kkg1ursf66d6up534c6l2cgf85kaqm8i.apps.googleusercontent.com',
+                webClientId: config.GOOGLE_WEB_CLIENT_ID,
                 offlineAccess: true,
             });
         }, 2000);

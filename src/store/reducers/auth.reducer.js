@@ -1,4 +1,4 @@
-import * as authConstants from 'store/constants/auth';
+import * as authConstants from 'store/constants/auth.constants';
 
 const initialState = {
     username: '',

@@ -1,11 +1,12 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
-import * as authConstants from 'store/constants/auth';
-import * as authActions from 'store/actions/auth';
-import * as authSelectors from 'store/selectors/auth';
+import * as authConstants from 'store/constants/auth.constants';
+import * as authActions from 'store/actions/auth.actions';
+import * as authSelectors from 'store/selectors/auth.selectors';
 // import * as RootNavigation from 'navigation/RootNavigation';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { LoginManager } from 'react-native-fbsdk';
-import { loginMethods } from 'store/constants/auth';
+import { loginMethods } from 'store/constants/auth.constants';
+import config from 'config';
 
 
 function* handleLoginSuccess() {
@@ -15,7 +16,7 @@ function* handleLoginSuccess() {
 const googleSignOut = async () => {
     try {
         await GoogleSignin.configure({
-            webClientId: '956395270084-kkg1ursf66d6up534c6l2cgf85kaqm8i.apps.googleusercontent.com',
+            webClientId: config.GOOGLE_WEB_CLIENT_ID,
             offlineAccess: true,
         });
         await GoogleSignin.revokeAccess();

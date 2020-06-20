@@ -5,7 +5,7 @@ import { isMountedRef, navigationRef } from "./RootNavigation";
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
-import * as authSelectors from "store/selectors/auth";
+import * as authSelectors from "store/selectors/auth.selectors";
 // screens
 import LoginScreen from "screens/loginScreen";
 import HomeScreen from "screens/homeScreen";
