@@ -16,8 +16,8 @@ const ButtonText = styled.Text`
     color: white;
 `;
 
-const AppGeneralButton = ({ onPress, children, variant = 'primary' }) => (
-    <Container onPress={onPress} variant={variant}>
+const AppGeneralButton = ({ onPress, children, variant = 'primary', ...rest }) => (
+    <Container onPress={onPress} variant={variant} {...rest}>
         <ButtonText>
             { children }
         </ButtonText>

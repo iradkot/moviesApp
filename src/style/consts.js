@@ -9,7 +9,8 @@ export const SCREEN_HEIGHT = windowHeight;
 export const fontSizes = {
     s: 12,
     m: 16,
-    l: 20
+    l: 20,
+    xl: 28
 }
 
 export const textDefault = css`

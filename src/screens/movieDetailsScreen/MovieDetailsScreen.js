@@ -1,31 +1,67 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { posterRatio, SCREEN_WIDTH } from 'style/consts';
 import AppGeneralButton from 'components/buttons/AppGeneralButton';
 
-const Container = styled.View`
+const pageSpacing = 'l';
+
+const Container = styled.ScrollView.attrs(({ theme }) => ({
+    contentContainerStyle: {
+        alignItems: 'center',
+        paddingHorizontal: theme.spacing[pageSpacing]
+    }
+}))`
+  background: black;
   flex: 1;
+`;
+
+const posterWidth = SCREEN_WIDTH * 0.7;
+const posterHeight = posterWidth * posterRatio;
+const MovieCoverImage = styled.Image`
+  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
+  height: ${ posterHeight }px;
+  width: ${ posterWidth }px;
+`;
+
+const Header = styled.View`
+  width: 100%;
+  height: 150px;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 
-const imageRatio = 1.5;
-const posterHeight = 300;
-const posterWidth = posterHeight / imageRatio;
-const MovieCoverImage = styled.Image`
-  height: ${posterHeight}px;
-  width: ${posterWidth}px;
-  position: absolute;
-  top: 0;
-  left: 0;
+const Title = styled.Text`
+  ${ ({ theme }) => theme.text.textDefault };
+  font-size: ${ ({ theme }) => theme.text.fontSizes.xl };
+  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
+  flex: 3;
+`;
+const Overview = styled.Text`
+  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
+  ${ ({ theme }) => theme.text.textDefault };
+ 
+`;
+
+const ReleaseDateText = styled.Text`
+  ${ ({ theme }) => theme.text.textDefault };
+ 
+`;
+
+const GoBackButton = styled(AppGeneralButton)`
+  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
 `;
 
 const MovieDetailsScreen = ({ navigation, route }) => {
-    const { movieData } = route.params;
-    console.log({ movieData });
+    const { vote_average, title, overview, release_date, poster_path } = route.params.movieData;
     return (
         <Container>
-            <MovieCoverImage source={{ uri: movieData.poster_path }} />
-            <AppGeneralButton onPress={navigation.goBack}> go Back </AppGeneralButton>
+            <Header>
+                <Title>{ title } <ReleaseDateText>({ release_date })</ReleaseDateText> </Title>
+            </Header>
+            <MovieCoverImage source={ { uri: poster_path } }/>
+            <Overview>{ overview }</Overview>
+            <GoBackButton onPress={ navigation.goBack }> go Back </GoBackButton>
         </Container>
     );
 };
