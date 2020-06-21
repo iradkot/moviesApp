@@ -51,8 +51,10 @@ const HomeScreen = () => {
     return (
         <Container>
             <Header>
-                <Title>Hello { username }!</Title>
-                <AppGeneralButton title={ 'Logout?' } onPress={ handleLogout }/>
+                <Title>Welcome { username }!</Title>
+                <AppGeneralButton onPress={ handleLogout }>
+                    Logout
+                </AppGeneralButton>
             </Header>
             <MoviesList moviesList={ moviesList }/>
         </Container>

@@ -1,21 +1,20 @@
 import React from 'react';
-import { Animated, Dimensions } from 'react-native';
+import { Animated } from 'react-native';
 import styled from 'styled-components';
 import { CARD_AREA, CARD_HEIGHT, height, MARGIN } from '../consts';
-
 
 const Container = styled(Animated.View)`
   width: 90%;
   margin-vertical: ${MARGIN}px;
   height: ${CARD_HEIGHT}px;
-  background: yellow;
+  background: ${({ theme }) => theme.colors.primaryTransparent(0.99)};
   align-self: center;
   ${({ isEmpty }) => isEmpty && 'opacity: 0'};
   flex-direction: row;
 `;
 
 const MovieTitle = styled.Text`
-
+  ${({ theme }) => theme.text.textDefault};
 `;
 
 const imageRatio = 1.5;
