@@ -13,12 +13,13 @@ function* handleLoginSuccess() {
     console.log('success!');
 }
 
+GoogleSignin.configure({
+    webClientId: config.GOOGLE_WEB_CLIENT_ID,
+    offlineAccess: true,
+});
+
 const googleSignOut = async () => {
     try {
-        await GoogleSignin.configure({
-            webClientId: config.GOOGLE_WEB_CLIENT_ID,
-            offlineAccess: true,
-        });
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
     } catch (error) {
@@ -32,7 +33,8 @@ function* handleLogout() {
     try {
         const loginMethod = yield select(authSelectors.loginMethodSelector);
         if(loginMethod === loginMethods.GOOGLE) {
-            yield googleSignOut();
+            const isSignedIn = yield GoogleSignin.isSignedIn()
+            if (isSignedIn) yield googleSignOut();
         } else if(loginMethod === loginMethods.FACEBOOK) {
             const loggedOut = yield LoginManager.logOut();
             LoginManager.getLoginBehavior()

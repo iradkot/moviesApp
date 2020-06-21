@@ -34,7 +34,6 @@ const LoginScreen = ({ navigation: { navigate } }) => {
     const dispatch = useDispatch();
     const getToken = useCallback(
         () => {
-            console.log('1');
             dispatch(authActions.getToken())
         },
         [ dispatch ],

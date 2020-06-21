@@ -29,7 +29,6 @@ function* initializeMoviesStore() {
         // parse movies for display
         const imagesBaseUrl = yield select(moviesSelectors.imagesBaseUrl);
         const posterSizes = yield select(moviesSelectors.posterSizes);
-        console.log({ imagesBaseUrl, posterSizes });
         const parsedPopularMoviesArray = moviesArray.map(({ id, vote_average, title, overview, release_date, poster_path  }) =>
             ({
                 id,

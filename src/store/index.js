@@ -12,10 +12,10 @@ import rootReducer from './reducers';
 /* Setting up redux-persist */
 const blacklistTransform = createTransform( // Doesn't persist errors and loading for selected keys
     (inboundState, key) => {
-        if (key === 'authReducer') {
+        if (key === 'authStore') {
             return omit(inboundState, ['error', 'loading']);
         }
-        if (key === 'moviesReducer') {
+        if (key === 'moviesStore') {
             return omit(inboundState, ['error', 'loading']);
         }
         return inboundState;

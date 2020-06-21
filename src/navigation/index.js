@@ -42,7 +42,6 @@ const AppNavigator = () => {
         return () => (isMountedRef.current = false);
     }, []);
     const username = useSelector(authSelectors.usernameSelector);
-    console.log({ username });
     return (
         <NavigationContainer ref={ navigationRef }>
             <Stack.Navigator
@@ -61,7 +60,7 @@ const AppNavigator = () => {
                     <Stack.Screen
                         name="Home"
                         component={ HomeScreen }
-                        options={ { title: 'Overview' } }/>
+                        options={ { headerShown: false } }/>
                     <Stack.Screen
                         name="Details"
                         component={ DetailsScreen }
