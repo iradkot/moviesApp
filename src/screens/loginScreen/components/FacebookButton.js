@@ -23,11 +23,7 @@ const FacebookButton = () => {
         if ( error ) {
             console.log('handleProfileDataGather', { error });
         } else {
-            console.log({ result });
-            console.log('Success fetching data: ' + result.toString());
-            console.log('result.name ' + result.name);
-            console.log('result.picture ' + result.picture);
-            loginSuccess({ user: { name: result.name, photo: result.picture } });
+            loginSuccess({ user: { name: result.name, photo: result.picture.data.url } });
         }
     }, []);
     console.log(' in facebook button!')

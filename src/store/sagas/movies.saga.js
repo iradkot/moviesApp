@@ -23,20 +23,21 @@ function* initializeMoviesStore() {
         console.log('we are here now with config:', moviesConfig);
         const response = yield tmdbRequest.getPopularMoviesList({language: 'en-US', page: 1, region: 'il'});
         const moviesArray = get(response, 'data.results', []);
-        console.log({ response });
         // TODO: implement get favourites from firebase
         const favouriteMovies = [];
         // parse movies for display
         const imagesBaseUrl = yield select(moviesSelectors.imagesBaseUrl);
         const posterSizes = yield select(moviesSelectors.posterSizes);
-        const parsedPopularMoviesArray = moviesArray.map(({ id, vote_average, title, overview, release_date, poster_path  }) =>
+        const backdropSizes = yield select(moviesSelectors.backdropSizes);
+        const parsedPopularMoviesArray = moviesArray.map(({ id, vote_average, title, overview, release_date, poster_path, backdrop_path }) =>
             ({
                 id,
                 vote_average,
                 title,
                 overview,
                 release_date,
-                poster_path: `${imagesBaseUrl}${posterSizes[1]}${poster_path}`
+                poster_path: `${imagesBaseUrl}${posterSizes[2]}${poster_path}`,
+                backdrop_path: `${imagesBaseUrl}${backdropSizes[1]}${backdrop_path}`,
             }));
         yield put(moviesActions.initializeMoviesStoreSuccess({favouriteMovies, popularMoviesList: parsedPopularMoviesArray}))
         

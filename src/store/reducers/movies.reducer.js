@@ -13,7 +13,7 @@ const authReducer = (state = initialState, { type, payload }) => {
         case moviesConstants.GET_TMDB_CONFIG_SUCCESS:
             return { ...state, tmdbConfig: payload }
         case moviesConstants.INITIALIZE_MOVIES_STORE:
-            return { ...state, favouriteMovies: [], loading: true }
+            return { ...state, popularMoviesList: [], loading: true }
         case moviesConstants.INITIALIZE_MOVIES_STORE_SUCCESS:
             return { ...state, loading: false, favouriteMovies: payload.favouriteMovies, popularMoviesList: payload.popularMoviesList,  }
         case moviesConstants.INITIALIZE_MOVIES_STORE_FAILED:

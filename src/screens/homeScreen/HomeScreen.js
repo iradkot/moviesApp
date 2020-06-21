@@ -15,7 +15,7 @@ const Header = styled.View`
   height: ${ HEADER_HEIGHT }px;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
 const Container = styled.View`
@@ -26,9 +26,8 @@ const Title = styled.Text`
   font-size: 20px;
 `;
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
-    
     const handleLogout = useCallback(
         () => {
             dispatch(authActions.logout());
@@ -38,25 +37,34 @@ const HomeScreen = () => {
     const initializeMoviesStore = useCallback(() => {
         dispatch(moviesActions.initializeMoviesStore())
     }, [ dispatch ]);
+    
     useEffect(() => {
         initializeMoviesStore()
     }, []);
     
     const authLoading = useSelector(authSelectors.isLoading);
     const moviesLoading = useSelector(moviesSelectors.isLoading);
-    const isLoading =  authLoading || moviesLoading;
+    // const isLoading =  authLoading || moviesLoading;
     const moviesList = useSelector(moviesSelectors.popularMoviesList);
     const username = useSelector(authSelectors.usernameSelector);
-    if ( isLoading || !username ) return <Loader/>
+    
+    const handleMoviePress = useCallback(
+        (movieData) => () => {
+            navigation.push('Details', { movieData })
+        },
+        [],
+    );
+    
+    if ( authLoading ) return <Loader/>
     return (
         <Container>
             <Header>
                 <Title>Welcome { username }!</Title>
-                <AppGeneralButton onPress={ handleLogout }>
+                <AppGeneralButton onPress={ handleLogout } variant={'secondary'}>
                     Logout
                 </AppGeneralButton>
             </Header>
-            <MoviesList moviesList={ moviesList }/>
+            <MoviesList refreshing={!!moviesLoading} onRefresh={initializeMoviesStore} moviesList={ moviesList } handleMoviePress={handleMoviePress}/>
         </Container>
     )
 };
