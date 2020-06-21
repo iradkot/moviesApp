@@ -6,6 +6,7 @@ const theme = {
         primary: '#19388A',
         primaryTransparent: (opacity = 0.5) => `rgba(25,56,138,${opacity})`,
         secondary: '#EE2D24',
+        favourite: '#39b8e0'
     },
     text: {
         textDefault,
