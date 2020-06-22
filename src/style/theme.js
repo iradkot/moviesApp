@@ -15,7 +15,7 @@ const theme = {
     spacing: {
         s: 4,
         m: 8,
-        l: 16,
+        l: 18,
     },
 };
 

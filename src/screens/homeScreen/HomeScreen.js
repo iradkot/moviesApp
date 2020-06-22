@@ -16,7 +16,7 @@ const Container = styled.View`
 
 const Title = styled.Text`
   ${({ theme }) => theme.text.textDefault};
-  font-size: ${({ theme }) => theme.text.fontSizes.xl}px;
+  font-size: ${({ theme }) => theme.text.fontSizes.xl};
   color: ${({ theme }) => theme.colors.primary};
   align-self: center;
   margin-top: ${ ({ theme }) => theme.spacing.l }px;

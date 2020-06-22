@@ -11,18 +11,35 @@ const Container = styled.View`
 
 const TitleSection = styled.View`
   flex: 2;
-  background: yellow;
+  justify-content: center;
+  align-items: center;
+  padding-horizontal: ${({ theme }) => theme.spacing.l};
 `;
+
+const TitleText = styled.Text`
+  ${({ theme }) => theme.text.textDefault};
+  font-size: ${({ theme }) => theme.text.fontSizes.xl};
+  color: black;
+`;
+
 const DescriptionSection = styled.View`
-  flex: 1;
-  background: green;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+  padding-horizontal: ${({ theme }) => theme.spacing.l};
+`;
+
+const DescriptionText = styled.Text`
+  ${({ theme }) => theme.text.textDefault};
+  font-size: ${({ theme }) => theme.text.fontSizes.l};
+  color: black;
+  text-align: center;
 `;
 
 const ButtonsContainer = styled.View`
   height: 100px;
   width: 100%;
   flex-direction: row;
-  background: red;
   align-items: center;
   justify-content: space-around;
 `;
@@ -41,8 +58,16 @@ const LoginScreen = ({ navigation: { navigate } }) => {
     
     return (
         <Container>
-            <TitleSection/>
-            <DescriptionSection/>
+            <TitleSection>
+                <TitleText>
+                    Welcome Stranger!
+                </TitleText>
+            </TitleSection>
+            <DescriptionSection>
+                <DescriptionText>
+                    Please log in to continue to the awesomness
+                </DescriptionText>
+            </DescriptionSection>
             <ButtonsContainer>
                 <FacebookButton/>
                 <GoogleButton onPress={ getToken }/>

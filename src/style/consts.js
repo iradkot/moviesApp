@@ -7,15 +7,15 @@ export const SCREEN_WIDTH = windowWidth;
 export const SCREEN_HEIGHT = windowHeight;
 
 export const fontSizes = {
-    s: 12,
-    m: 16,
-    l: 20,
-    xl: 28
+    s: '12px',
+    m: '16px',
+    l: '20px',
+    xl: '28px'
 }
 
 export const textDefault = css`
     font-family: ${isIphone ? 'San Francisco' : 'Roboto'};
-    font-size: ${fontSizes.m}px;
+    font-size: ${fontSizes.m};
     color: white;
  `;
 
