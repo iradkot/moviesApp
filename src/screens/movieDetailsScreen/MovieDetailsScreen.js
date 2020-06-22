@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { posterRatio, SCREEN_WIDTH } from 'style/consts';
-import AppGeneralButton from 'components/buttons/AppGeneralButton';
 import FavouriteButton from 'components/FavouriteButton';
+import CircularRating from 'components/circularRating';
 
 const pageSpacing = 'l';
 
 const Container = styled.ScrollView.attrs(({ theme }) => ({
     contentContainerStyle: {
         alignItems: 'center',
-        paddingHorizontal: theme.spacing[pageSpacing]
+        padding: theme.spacing[pageSpacing]
     }
 }))`
   background: black;
@@ -19,7 +19,7 @@ const Container = styled.ScrollView.attrs(({ theme }) => ({
 const posterWidth = SCREEN_WIDTH * 0.7;
 const posterHeight = posterWidth * posterRatio;
 const MovieCoverImage = styled.Image`
-  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing]}px;
+  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
   height: ${ posterHeight }px;
   width: ${ posterWidth }px;
 `;
@@ -29,13 +29,12 @@ const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding-horizontal: ${({ theme }) => theme.spacing.m}px;
+  padding-horizontal: ${ ({ theme }) => theme.spacing.m }px;
 `;
 
 const Title = styled.Text`
   ${ ({ theme }) => theme.text.textDefault };
   font-size: ${ ({ theme }) => theme.text.fontSizes.xl };
-  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
   flex: 3;
   text-align: center;
   height: 100%;
@@ -50,26 +49,24 @@ const ReleaseDateText = styled.Text`
   ${ ({ theme }) => theme.text.textDefault };
 `;
 
-const GoBackButton = styled(AppGeneralButton)`
-  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
-`;
-
-const HeaderLeftButton = styled.View`
+const HeaderRight = styled.View`
   flex: 1
 `;
 
-const MovieDetailsScreen = ({ navigation, route }) => {
+const MovieDetailsScreen = ({ route }) => {
     const { vote_average, title, overview, release_date, poster_path } = route.params.movieData;
+    
     return (
         <Container>
             <Header>
-                <FavouriteButton movieData={route.params.movieData} />
+                <FavouriteButton movieData={ route.params.movieData }/>
                 <Title>{ title } <ReleaseDateText>({ release_date })</ReleaseDateText> </Title>
-                <HeaderLeftButton/>
+                <HeaderRight>
+                    <CircularRating rating={ vote_average }/>
+                </HeaderRight>
             </Header>
             <MovieCoverImage source={ { uri: poster_path } }/>
             <Overview>{ overview }</Overview>
-            <GoBackButton onPress={ navigation.goBack }> go Back </GoBackButton>
         </Container>
     );
 };
