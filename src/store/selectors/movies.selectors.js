@@ -3,7 +3,7 @@ import { get } from 'lodash';
 const moviesSelector = (state) => state.moviesStore;
 
 export const tmdbConfig = (state) => moviesSelector(state).tmdbConfig;
-export const imagesBaseUrl = (state) => get(tmdbConfig(state), 'images.base_url');
+export const imagesBaseUrl = (state) => get(tmdbConfig(state), 'images.secure_base_url');
 export const posterSizes = (state) => get(tmdbConfig(state), 'images.poster_sizes');
 export const backdropSizes = (state) => get(tmdbConfig(state), 'images.backdrop_sizes');
 
