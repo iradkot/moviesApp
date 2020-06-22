@@ -19,17 +19,17 @@ const Container = styled.ScrollView.attrs(({ theme }) => ({
 const posterWidth = SCREEN_WIDTH * 0.7;
 const posterHeight = posterWidth * posterRatio;
 const MovieCoverImage = styled.Image`
-  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
+  margin-top: ${ ({ theme }) => theme.spacing[pageSpacing]}px;
   height: ${ posterHeight }px;
   width: ${ posterWidth }px;
 `;
 
 const Header = styled.View`
   width: 100%;
-  height: 150px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding-horizontal: ${({ theme }) => theme.spacing.m}px;
 `;
 
 const Title = styled.Text`
@@ -37,6 +37,8 @@ const Title = styled.Text`
   font-size: ${ ({ theme }) => theme.text.fontSizes.xl };
   margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
   flex: 3;
+  text-align: center;
+  height: 100%;
 `;
 const Overview = styled.Text`
   margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
@@ -46,11 +48,14 @@ const Overview = styled.Text`
 
 const ReleaseDateText = styled.Text`
   ${ ({ theme }) => theme.text.textDefault };
- 
 `;
 
 const GoBackButton = styled(AppGeneralButton)`
   margin-top: ${ ({ theme }) => theme.spacing[pageSpacing] }px;
+`;
+
+const HeaderLeftButton = styled.View`
+  flex: 1
 `;
 
 const MovieDetailsScreen = ({ navigation, route }) => {
@@ -60,6 +65,7 @@ const MovieDetailsScreen = ({ navigation, route }) => {
             <Header>
                 <FavouriteButton movieData={route.params.movieData} />
                 <Title>{ title } <ReleaseDateText>({ release_date })</ReleaseDateText> </Title>
+                <HeaderLeftButton/>
             </Header>
             <MovieCoverImage source={ { uri: poster_path } }/>
             <Overview>{ overview }</Overview>
