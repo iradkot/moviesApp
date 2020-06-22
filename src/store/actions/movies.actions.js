@@ -24,17 +24,17 @@ export const getTmdbConfigFailed = error => ({
     payload: error
 });
 
-// export const getPopularMovies = () => ({
-//     type: moviesConstants.GET_POPULAR_MOVIES_LIST
-// });
-// export const getPopularMoviesSuccess = payload => ({
-//     type: moviesConstants.GET_POPULAR_MOVIES_LIST_SUCCESS,
-//     payload
-// });
-// export const getPopularMoviesFailed = error => ({
-//     type: moviesConstants.GET_POPULAR_MOVIES_LIST_FAILED,
-//     payload: error
-// });
+export const getMorePopularMovies = () => ({
+    type: moviesConstants.GET_MORE_POPULAR_MOVIES_LIST
+});
+export const getMorePopularMoviesSuccess = payload => ({
+    type: moviesConstants.GET_MORE_POPULAR_MOVIES_LIST_SUCCESS,
+    payload
+});
+export const getMorePopularMoviesFailed = error => ({
+    type: moviesConstants.GET_MORE_POPULAR_MOVIES_LIST_FAILED,
+    payload: error
+});
 //
 // export const getFavouriteMovies = () => ({
 //     type: moviesConstants.GET_FAVOURITE_MOVIES_LIST
@@ -52,7 +52,7 @@ export const setFavouriteMovies = (payload) => ({
     type: moviesConstants.SET_FAVOURITE_MOVIES_LIST,
     payload
 });
-export const setFavouriteMoviesSuccess = payload => ({
+export const setFavouriteMoviesSuccess = () => ({
     type: moviesConstants.SET_FAVOURITE_MOVIES_LIST_SUCCESS,
 });
 export const setFavouriteMoviesFailed = error => ({

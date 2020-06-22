@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as authActions from 'store/actions/auth.actions';
 import styled from "styled-components/native";
 import FacebookButton from 'screens/loginScreen/components/FacebookButton';
@@ -13,7 +13,7 @@ const TitleSection = styled.View`
   flex: 2;
   justify-content: center;
   align-items: center;
-  padding-horizontal: ${({ theme }) => theme.spacing.l};
+  padding-horizontal: ${({ theme }) => theme.spacing.l}px;
 `;
 
 const TitleText = styled.Text`
@@ -26,7 +26,7 @@ const DescriptionSection = styled.View`
   flex: 2;
   justify-content: center;
   align-items: center;
-  padding-horizontal: ${({ theme }) => theme.spacing.l};
+  padding-horizontal: ${({ theme }) => theme.spacing.l}px;
 `;
 
 const DescriptionText = styled.Text`
@@ -47,7 +47,7 @@ const ButtonsContainer = styled.View`
 
 
 
-const LoginScreen = ({ navigation: { navigate } }) => {
+const LoginScreen = () => {
     const dispatch = useDispatch();
     const getToken = useCallback(
         () => {

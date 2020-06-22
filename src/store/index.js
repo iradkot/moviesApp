@@ -16,7 +16,7 @@ const blacklistTransform = createTransform( // Doesn't persist errors and loadin
             return omit(inboundState, ['error', 'loading']);
         }
         if (key === 'moviesStore') {
-            return omit(inboundState, ['error', 'loading']);
+            return omit(inboundState, ['error', 'loading', 'moreMoviesLoading']);
         }
         return inboundState;
     },

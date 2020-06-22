@@ -6,6 +6,9 @@ const initialState = {
     tmdbConfig: null,
     error: false,
     loading: false,
+    moreMoviesLoading: false,
+    popularMoviesTotalPages: 0, // we fetch first page regardless of total pages, this is redundant at app start
+    popularMoviesLastFetchedPage: 1
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
@@ -13,11 +16,21 @@ const authReducer = (state = initialState, { type, payload }) => {
         case moviesConstants.GET_TMDB_CONFIG_SUCCESS:
             return { ...state, tmdbConfig: payload }
         case moviesConstants.INITIALIZE_MOVIES_STORE:
-            return { ...state, popularMoviesList: [], loading: true }
-        case moviesConstants.INITIALIZE_MOVIES_STORE_SUCCESS:
-            return { ...state, loading: false, favouriteMovies: payload.favouriteMovies, popularMoviesList: payload.popularMoviesList,  }
+            return { ...state, popularMoviesList: [], loading: true, popularMoviesLastFetchedPage: 1 }
+        case moviesConstants.GET_MORE_POPULAR_MOVIES_LIST:
+            return { ...state, moreMoviesLoading: true }
         case moviesConstants.SET_FAVOURITE_MOVIES_LIST:
             return { ...state, favouriteMovies: payload  }
+            
+        case moviesConstants.INITIALIZE_MOVIES_STORE_SUCCESS:
+            return { ...state, loading: false, favouriteMovies: payload.favouriteMovies,
+                popularMoviesList: payload.popularMoviesList, popularMoviesTotalPages: payload.popularMoviesTotalPages }
+        case moviesConstants.GET_MORE_POPULAR_MOVIES_LIST_SUCCESS:
+            return { ...state, popularMoviesList: [...state.popularMoviesList, ...payload.popularMoviesList],
+                popularMoviesLastFetchedPage:  payload.popularMoviesLastFetchedPage, moreMoviesLoading: false }
+                
+        case moviesConstants.GET_MORE_POPULAR_MOVIES_LIST_FAILED:
+            return { ...state, moreMoviesLoading: false, error: payload }
         case moviesConstants.INITIALIZE_MOVIES_STORE_FAILED:
             return { ...state, loading: false, error: payload }
         default:

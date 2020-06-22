@@ -1,15 +1,18 @@
 import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { CARD_AREA, CARD_HEIGHT, height, MARGIN } from '../consts';
 import AppGeneralButton from 'components/buttons/AppGeneralButton';
 import FavouriteButton from 'components/FavouriteButton';
+import Loader from 'components/loader';
+import * as moviesSelectors from 'store/selectors/movies.selectors';
 
 const Container = styled(Animated.View)`
   width: 90%;
   margin-vertical: ${ MARGIN }px;
   height: ${ CARD_HEIGHT }px;
-  background: ${ ({ theme }) => theme.colors.primaryTransparent(0.99) };
+  background: ${ ({ theme, isLoader }) => theme.colors.primaryTransparent(isLoader ? 0 : 0.95) };
   align-self: center;
   ${ ({ isEmpty }) => isEmpty && 'opacity: 0' };
   flex-direction: row;
@@ -34,6 +37,7 @@ const OverlayView = styled.TouchableOpacity`
 `;
 
 const MovieCard = ({ movieData, index, y, handleMoviePress }) => {
+    const pulledAllPopularMovies = useSelector(moviesSelectors.pulledAllPopularMovies);
     const position = Animated.subtract(index * CARD_AREA, y);
     const isDisappearing = -CARD_AREA;
     const isTop = 0;
@@ -50,11 +54,17 @@ const MovieCard = ({ movieData, index, y, handleMoviePress }) => {
         extrapolate: 'clamp'
     })
     const opacity = position.interpolate({
-        inputRange: [isDisappearing, isTop, isBottom, isAppearing],
-        outputRange: [0.5, 0.8, 0.8, 0.5],
+        inputRange: [ isDisappearing, isTop, isBottom, isAppearing ],
+        outputRange: [ 0.5, 0.8, 0.8, 0.5 ],
     });
+    
+    if ( movieData.id === 'finalComponent' ) {
+        return <Container isLoader style={ { transform: [ { translateY }, { scale } ] } }>
+            { pulledAllPopularMovies ? <MovieTitle>End of list </MovieTitle> : <Loader/> }
+        </Container>
+    }
     const isEmpty = useMemo(() => !movieData.title, []);
-    if (isEmpty) return <Container isEmpty={ isEmpty }/>
+    if ( isEmpty ) return <Container isEmpty={ isEmpty }/>
     return (
         <Container style={ { opacity, transform: [ { translateY }, { scale } ] } }>
             <MovieBackdropBackground source={ { uri: movieData.backdrop_path } }>
@@ -66,7 +76,7 @@ const MovieCard = ({ movieData, index, y, handleMoviePress }) => {
                     <AppGeneralButton onPress={ handleMoviePress(movieData) }>
                         Click for details
                     </AppGeneralButton>
-                    </OverlayView>
+                </OverlayView>
             </MovieBackdropBackground>
         </Container>
     );

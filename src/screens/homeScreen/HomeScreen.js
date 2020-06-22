@@ -15,9 +15,9 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  ${({ theme }) => theme.text.textDefault};
-  font-size: ${({ theme }) => theme.text.fontSizes.xl};
-  color: ${({ theme }) => theme.colors.primary};
+  ${ ({ theme }) => theme.text.textDefault };
+  font-size: ${ ({ theme }) => theme.text.fontSizes.xl };
+  color: ${ ({ theme }) => theme.colors.primary };
   align-self: center;
   margin-top: ${ ({ theme }) => theme.spacing.l }px;
 `;
@@ -79,6 +79,9 @@ const HomeScreen = ({ navigation }) => {
     const initializeMoviesStore = useCallback(() => {
         dispatch(moviesActions.initializeMoviesStore())
     }, [ dispatch ]);
+    const getMorePopularMovies = useCallback(() => {
+        dispatch(moviesActions.getMorePopularMovies())
+    }, [ dispatch ]);
     
     useEffect(() => {
         initializeMoviesStore()
@@ -86,6 +89,8 @@ const HomeScreen = ({ navigation }) => {
     
     
     const favouriteMoviesList = useSelector(moviesSelectors.favouriteMoviesList);
+    const pulledAllPopularMovies = useSelector(moviesSelectors.pulledAllPopularMovies);
+    const moreMoviesLoading = useSelector(moviesSelectors.moreMoviesLoading);
     const moviesLoading = useSelector(moviesSelectors.isLoading);
     const moviesList = useSelector(moviesSelectors.popularMoviesList);
     const authLoading = useSelector(authSelectors.isLoading);
@@ -100,7 +105,13 @@ const HomeScreen = ({ navigation }) => {
     );
     
     const toggleShowFavourites = useCallback(() => setShowFavorites(!showFavorites), [ showFavorites ]);
-    const titleText = useMemo(() => showFavorites ? `Your favourites` : `Welcome ${username}!`, [showFavorites])
+    const titleText = useMemo(() => showFavorites ? `Your favourites` : `Welcome ${ username }!`, [ showFavorites ])
+    const handleLoadMoreMovies = useCallback(() => {
+        if ( !moviesLoading && !moreMoviesLoading && !pulledAllPopularMovies ) {
+            console.log('more movies?');
+            getMorePopularMovies()
+        }
+    }, [ moviesLoading, moreMoviesLoading ])
     if ( authLoading ) return <Loader/>
     return (
         <Container>
@@ -110,11 +121,12 @@ const HomeScreen = ({ navigation }) => {
                 <UserAvatar source={ { uri: profileImage } }/>
                 <FavouritesComponent onPress={ toggleShowFavourites } showFavorites={ showFavorites }/>
             </Header>
-            {showFavorites ?
-                <MoviesList id={'12'} key={'12'} moviesList={ Object.values(favouriteMoviesList) }
+            { showFavorites ?
+                <MoviesList id={ '12' } key={ '12' } moviesList={ Object.values(favouriteMoviesList) }
                             handleMoviePress={ handleMoviePress }/> :
-                <MoviesList id={'34'} key={'34'} refreshing={ !!moviesLoading } onRefresh={ initializeMoviesStore } moviesList={ moviesList }
-                            handleMoviePress={ handleMoviePress }/>
+                <MoviesList id={ '34' } key={ '34' } refreshing={ !!moviesLoading } onRefresh={ initializeMoviesStore }
+                            moviesList={ moviesList }
+                            handleMoviePress={ handleMoviePress } handleLoadMoreMovies={ handleLoadMoreMovies }/>
             }
         </Container>
     )
