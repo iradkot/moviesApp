@@ -9,10 +9,11 @@ const buttonBackground = '#3b5998';
 const FacebookButton = () => {
     const dispatch = useDispatch();
     const loginSuccess = useCallback(
-        ({ user: { name, photo } }) => {
+        ({ user: { name, photo, id } }) => {
             dispatch(authActions.loginSuccess({
                 username: name,
                 profileImageUrl: photo,
+                id,
                 loginMethod: loginMethods.FACEBOOK,
             }))
         },
@@ -23,7 +24,8 @@ const FacebookButton = () => {
         if ( error ) {
             console.log('handleProfileDataGather', { error });
         } else {
-            loginSuccess({ user: { name: result.name, photo: result.picture.data.url } });
+            console.log({ result });
+            loginSuccess({ user: { name: result.name, photo: result.picture.data.url, id: result.email || result.id } });
         }
     }, []);
     console.log(' in facebook button!')
@@ -40,8 +42,8 @@ const FacebookButton = () => {
                         console.log('Login success with permissions: ', result.grantedPermissions.toString(), result.grantedPermissions);
                         // Create a graph request asking for user information with a callback to handle the response.
                         const infoRequest = new GraphRequest(
-                            '/me?fields=picture,name',
-                            null,
+                            '/me?fields=picture,name,email',
+                            { scope: 'email' },
                             handleProfileDataGather,
                         );
                         console.log('requesting data?')

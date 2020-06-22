@@ -8,12 +8,13 @@ import { GoogleSignin, statusCodes, } from '@react-native-community/google-signi
 import config from 'config';
 
 const buttonBackground = "#cf0028"
-const GoogleButton = ({ onPress }) => {
+const GoogleButton = () => {
     const dispatch = useDispatch();
     const loginSuccess = useCallback(
-        ({ user: { name, photo } }) => {
+        ({ user: { name, photo, email } }) => {
             dispatch(authActions.loginSuccess({
                 username: name,
+                id: email,
                 profileImageUrl: photo,
                 loginMethod: loginMethods.GOOGLE,
             }))

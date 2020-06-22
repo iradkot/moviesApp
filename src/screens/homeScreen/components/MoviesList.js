@@ -6,7 +6,10 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const MoviesList = ({ moviesList, handleMoviePress, onRefresh, refreshing }) => {
     const y = new Animated.Value(0);
-    const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], { useNativeDriver: true })
+    const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
+        useNativeDriver: true,
+    });
+    
     return (
         <AnimatedFlatList
             onRefresh={onRefresh}

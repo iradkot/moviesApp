@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import { CARD_AREA, CARD_HEIGHT, height, MARGIN } from '../consts';
 import AppGeneralButton from 'components/buttons/AppGeneralButton';
+import FavouriteButton from 'components/FavouriteButton';
 
 const Container = styled(Animated.View)`
   width: 90%;
@@ -16,12 +17,13 @@ const Container = styled(Animated.View)`
 
 const MovieTitle = styled.Text`
   ${ ({ theme }) => theme.text.textDefault };
+  font-size: ${ ({ theme }) => theme.text.fontSizes.xl };
+  text-align: center;
 `;
 
 
 const MovieBackdropBackground = styled.ImageBackground`
   flex: 1;
-  
 `;
 
 const OverlayView = styled.TouchableOpacity`
@@ -47,22 +49,24 @@ const MovieCard = ({ movieData, index, y, handleMoviePress }) => {
         outputRange: [ 0.7, 1, 1, 0.8 ],
         extrapolate: 'clamp'
     })
-    const blurRadius = position.interpolate({
-        inputRange: [ isDisappearing, isTop, isBottom, isAppearing ],
-        outputRange: [ 3, 1, 0, 4 ],
-        extrapolate: 'clamp'
-    })
+    const opacity = position.interpolate({
+        inputRange: [isDisappearing, isTop, isBottom, isAppearing],
+        outputRange: [0.5, 0.8, 0.8, 0.5],
+    });
+    const isEmpty = useMemo(() => !movieData.title, []);
+    if (isEmpty) return <Container isEmpty={ isEmpty }/>
     return (
-        <Container isEmpty={ !movieData.title } style={ { transform: [ { translateY }, { scale } ] } }>
+        <Container style={ { opacity, transform: [ { translateY }, { scale } ] } }>
             <MovieBackdropBackground source={ { uri: movieData.backdrop_path } }>
                 <OverlayView>
+                    <FavouriteButton movieData={ movieData }/>
                     <MovieTitle>
                         { movieData.title }
                     </MovieTitle>
                     <AppGeneralButton onPress={ handleMoviePress(movieData) }>
                         Click for details
                     </AppGeneralButton>
-                </OverlayView>
+                    </OverlayView>
             </MovieBackdropBackground>
         </Container>
     );

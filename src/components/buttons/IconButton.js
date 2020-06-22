@@ -6,17 +6,17 @@ const ButtonText = styled.Text`
   font-family: Arial;
   font-size: 15px;
   color: white;
+  margin-left: ${({ theme }) => theme.spacing.m}px;
 `;
 
 const StyledButton  = styled(Icon.Button)`
-  padding: 10px;
 `;
 
-const IconButton = ({ onPress, iconName, backgroundColor, children, ...rest }) => (
-    <StyledButton name={iconName} backgroundColor={backgroundColor} onPress={onPress} {...rest}>
-        <ButtonText >
-            {children}
-        </ButtonText>
+const IconButton = ({ onPress, iconName, children, ...rest }) => (
+    <StyledButton iconStyle={{ marginRight: 0 }} name={iconName} onPress={onPress} {...rest}>
+        { children && <ButtonText>
+            { children }
+        </ButtonText> }
     </StyledButton>
 );
 

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { posterRatio, SCREEN_WIDTH } from 'style/consts';
 import AppGeneralButton from 'components/buttons/AppGeneralButton';
+import FavouriteButton from 'components/FavouriteButton';
 
 const pageSpacing = 'l';
 
@@ -57,6 +58,7 @@ const MovieDetailsScreen = ({ navigation, route }) => {
     return (
         <Container>
             <Header>
+                <FavouriteButton movieData={route.params.movieData} />
                 <Title>{ title } <ReleaseDateText>({ release_date })</ReleaseDateText> </Title>
             </Header>
             <MovieCoverImage source={ { uri: poster_path } }/>

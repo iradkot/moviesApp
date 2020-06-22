@@ -55,11 +55,14 @@ const FavouritesIconButton = styled(IconButton).attrs(({ theme }) => ({
   justify-content: center;
 `;
 
-const FavouritesComponent = () => (
-    <FavouritesIconButton>
-        24
-    </FavouritesIconButton>
-)
+const FavouritesComponent = () => {
+    const favouriteMoviesList = useSelector(moviesSelectors.favouriteMoviesList);
+    return (
+        <FavouritesIconButton>
+            { Object.keys(favouriteMoviesList).length + '' }
+        </FavouritesIconButton>
+    );
+}
 
 const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -79,21 +82,20 @@ const HomeScreen = ({ navigation }) => {
     
     const authLoading = useSelector(authSelectors.isLoading);
     const moviesLoading = useSelector(moviesSelectors.isLoading);
-    // const isLoading =  authLoading || moviesLoading;
     const moviesList = useSelector(moviesSelectors.popularMoviesList);
     const username = useSelector(authSelectors.usernameSelector);
     const profileImage = useSelector(authSelectors.profileImageUrlSelector);
     
     const handleMoviePress = useCallback(
         (movieData) => () => {
-            navigation.push('Details', { movieData })
+            navigation.navigate('Details', { movieData })
         },
         [],
     );
     
     const displayFavourites = useCallback(
         () => () => {
-            navigation.push('Favourites')
+            navigation.navigate('Favourites')
         },
         [],
     );

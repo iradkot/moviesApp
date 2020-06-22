@@ -1,6 +1,7 @@
 import * as authConstants from 'store/constants/auth.constants';
 
 const initialState = {
+    id: false,
     username: '',
     profileImageUrl: '',
     loginMethod: '', // google / facebook
@@ -23,6 +24,7 @@ const authReducer = (state = initialState, { type, payload }) => {
                 username: payload.username,
                 profileImageUrl: payload.profileImageUrl,
                 loginMethod: payload.loginMethod,
+                id: payload.id,
                 loading: false
             }
         case authConstants.LOGOUT_FAILED:

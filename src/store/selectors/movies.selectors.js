@@ -10,4 +10,4 @@ export const backdropSizes = (state) => get(tmdbConfig(state), 'images.backdrop_
 export const isLoading = (state) => moviesSelector(state).loading;
 export const error = (state) => moviesSelector(state).error;
 export const popularMoviesList = (state) => moviesSelector(state).popularMoviesList;
-export const userFavouriteMoviesList = (state) => moviesSelector(state).popularMoviesList;
+export const favouriteMoviesList = (state) => moviesSelector(state).favouriteMovies;

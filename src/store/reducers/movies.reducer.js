@@ -16,6 +16,8 @@ const authReducer = (state = initialState, { type, payload }) => {
             return { ...state, popularMoviesList: [], loading: true }
         case moviesConstants.INITIALIZE_MOVIES_STORE_SUCCESS:
             return { ...state, loading: false, favouriteMovies: payload.favouriteMovies, popularMoviesList: payload.popularMoviesList,  }
+        case moviesConstants.SET_FAVOURITE_MOVIES_LIST:
+            return { ...state, favouriteMovies: payload  }
         case moviesConstants.INITIALIZE_MOVIES_STORE_FAILED:
             return { ...state, loading: false, error: payload }
         default:
