@@ -1,17 +1,24 @@
+import React, { useMemo, useRef, useEffect } from 'react';
 import MovieCard from './MovieCard';
 import { Animated, FlatList } from 'react-native';
-import React from 'react';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const MoviesList = ({ moviesList, handleMoviePress, onRefresh, refreshing }) => {
-    const y = new Animated.Value(0);
+const MoviesList = ({ moviesList, handleMoviePress, onRefresh, refreshing, ...rest }) => {
+    const y = useMemo(() => new Animated.Value(0), []);
     const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
         useNativeDriver: true,
     });
     
+    const ListRef = useRef(null);
+    
+    useEffect(() => {
+        ListRef.current.scrollToOffset({ animated: false, offset: 0 });
+    }, []);
+    
     return (
         <AnimatedFlatList
+            ref={ListRef}
             onRefresh={onRefresh}
             refreshing={refreshing}
             scrollEventThrottle={ 16 }
@@ -22,8 +29,10 @@ const MoviesList = ({ moviesList, handleMoviePress, onRefresh, refreshing }) => 
             ) }
             keyExtractor={ item => item.id + '' }
             { ...{ onScroll } }
+            {...rest}
         />
     );
 };
 
 export default MoviesList;
+// export default React.memo(MoviesList);

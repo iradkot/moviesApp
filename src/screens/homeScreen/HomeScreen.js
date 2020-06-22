@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Loader from 'components/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components/native";
@@ -15,7 +15,9 @@ const Container = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 20px;
+  ${({ theme }) => theme.text.textDefault};
+  font-size: ${({ theme }) => theme.text.fontSizes.xl}px;
+  color: ${({ theme }) => theme.colors.primary};
   align-self: center;
   margin-top: ${ ({ theme }) => theme.spacing.l }px;
 `;
@@ -45,9 +47,9 @@ const LogoutButton = styled(IconButton).attrs(({ theme }) => ({
   justify-content: center;
 `;
 
-const FavouritesIconButton = styled(IconButton).attrs(({ theme }) => ({
+const FavouritesIconButton = styled(IconButton).attrs(({ theme, showFavorites }) => ({
     backgroundColor: theme.colors.favourite,
-    name: 'star-outline',
+    name: showFavorites ? 'star' : 'star-outline',
 }))`
   width: 60px;
   height: 60px;
@@ -55,16 +57,18 @@ const FavouritesIconButton = styled(IconButton).attrs(({ theme }) => ({
   justify-content: center;
 `;
 
-const FavouritesComponent = () => {
+const FavouritesComponent = ({ showFavorites, onPress }) => {
     const favouriteMoviesList = useSelector(moviesSelectors.favouriteMoviesList);
     return (
-        <FavouritesIconButton>
+        <FavouritesIconButton onPress={ onPress } showFavorites={ showFavorites }>
             { Object.keys(favouriteMoviesList).length + '' }
         </FavouritesIconButton>
     );
 }
 
 const HomeScreen = ({ navigation }) => {
+    const [ showFavorites, setShowFavorites ] = useState(false);
+    
     const dispatch = useDispatch();
     const handleLogout = useCallback(
         () => {
@@ -80,9 +84,11 @@ const HomeScreen = ({ navigation }) => {
         initializeMoviesStore()
     }, []);
     
-    const authLoading = useSelector(authSelectors.isLoading);
+    
+    const favouriteMoviesList = useSelector(moviesSelectors.favouriteMoviesList);
     const moviesLoading = useSelector(moviesSelectors.isLoading);
     const moviesList = useSelector(moviesSelectors.popularMoviesList);
+    const authLoading = useSelector(authSelectors.isLoading);
     const username = useSelector(authSelectors.usernameSelector);
     const profileImage = useSelector(authSelectors.profileImageUrlSelector);
     
@@ -93,24 +99,23 @@ const HomeScreen = ({ navigation }) => {
         [],
     );
     
-    const displayFavourites = useCallback(
-        () => () => {
-            navigation.navigate('Favourites')
-        },
-        [],
-    );
-    
+    const toggleShowFavourites = useCallback(() => setShowFavorites(!showFavorites), [ showFavorites ]);
+    const titleText = useMemo(() => showFavorites ? `Your favourites` : `Welcome ${username}!`, [showFavorites])
     if ( authLoading ) return <Loader/>
     return (
         <Container>
-            <Title>Welcome { username }!</Title>
+            <Title>{ titleText }</Title>
             <Header>
                 <LogoutButton onPress={ handleLogout }/>
                 <UserAvatar source={ { uri: profileImage } }/>
-                <FavouritesComponent onPress={ displayFavourites }/>
+                <FavouritesComponent onPress={ toggleShowFavourites } showFavorites={ showFavorites }/>
             </Header>
-            <MoviesList refreshing={ !!moviesLoading } onRefresh={ initializeMoviesStore } moviesList={ moviesList }
-                        handleMoviePress={ handleMoviePress }/>
+            {showFavorites ?
+                <MoviesList id={'12'} key={'12'} moviesList={ Object.values(favouriteMoviesList) }
+                            handleMoviePress={ handleMoviePress }/> :
+                <MoviesList id={'34'} key={'34'} refreshing={ !!moviesLoading } onRefresh={ initializeMoviesStore } moviesList={ moviesList }
+                            handleMoviePress={ handleMoviePress }/>
+            }
         </Container>
     )
 };

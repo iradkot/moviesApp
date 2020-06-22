@@ -24,11 +24,9 @@ const FacebookButton = () => {
         if ( error ) {
             console.log('handleProfileDataGather', { error });
         } else {
-            console.log({ result });
             loginSuccess({ user: { name: result.name, photo: result.picture.data.url, id: result.email || result.id } });
         }
     }, []);
-    console.log(' in facebook button!')
     const handleLogin = useCallback(
         () => {
             // LoginManager.logOut();
@@ -46,7 +44,6 @@ const FacebookButton = () => {
                             { scope: 'email' },
                             handleProfileDataGather,
                         );
-                        console.log('requesting data?')
                         // Start the graph request.
                         new GraphRequestManager().addRequest(infoRequest).start();
                     }

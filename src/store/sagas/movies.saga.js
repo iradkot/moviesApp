@@ -11,7 +11,6 @@ function* getTmdbConfig() {
     try {
         const response = yield tmdbRequest.getConfiguration();
         yield put(moviesActions.getTmdbConfigSuccess(response.data))
-        console.log({ response });
     } catch (e) {
         yield put(moviesActions.getTmdbConfigFailed(e))
         yield put(moviesActions.initializeMoviesStoreFailed(e));
@@ -22,15 +21,11 @@ function* initializeMoviesStore() {
     try {
         const moviesConfig = yield select(moviesSelectors.tmdbConfig);
         if (!moviesConfig) return yield put(moviesActions.getTmdbConfig());
-        console.log('we are here now with config:', moviesConfig);
         const response = yield tmdbRequest.getPopularMoviesList({language: 'en-US', page: 1, region: 'il'});
         const moviesArray = get(response, 'data.results', []);
-        // TODO: implement get favourites from firebase
-        console.log('getting favourites');
         const userId = yield select(authSelectors.userIdSelector)
         const favouritesResponse = yield firestoreActions.getFavourites(userId);
         const favouriteMovies = get(favouritesResponse, 'favourites', {});
-        console.log({ favouriteMovies });
         // parse movies for display
         const imagesBaseUrl = yield select(moviesSelectors.imagesBaseUrl);
         const posterSizes = yield select(moviesSelectors.posterSizes);

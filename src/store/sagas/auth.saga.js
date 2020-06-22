@@ -38,7 +38,6 @@ function* handleLogout() {
         } else if(loginMethod === loginMethods.FACEBOOK) {
             const loggedOut = yield LoginManager.logOut();
             LoginManager.getLoginBehavior()
-            console.log({loggedOut });
         }
         yield put(authActions.logoutSuccess());
     } catch (e) {

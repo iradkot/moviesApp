@@ -25,7 +25,6 @@ const GoogleButton = () => {
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            console.log({ userInfo });
             loginSuccess(userInfo)
         } catch (error) {
             console.log({ error });
@@ -38,15 +37,12 @@ const GoogleButton = () => {
                 console.log('Google login error', 'play services not available or outdated');
             } else {
                 // some other error happened
-                console.log(error);
-                console.log(error.toString());
                 console.log('Google login error', 'Unknown error, contact support');
             }
         }
     };
     useEffect(() => {
         setTimeout(async () => {
-            console.log('now!');
             // signIn();
             await GoogleSignin.configure({
                 webClientId: config.GOOGLE_WEB_CLIENT_ID,

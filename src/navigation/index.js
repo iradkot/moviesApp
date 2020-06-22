@@ -32,6 +32,17 @@ const AppNavigator = () => {
                     <Stack.Screen
                         name="Details"
                         component={ MovieDetailsScreen }
+                        options={({ route }) => ({
+                            headerShown: true,
+                            title: route.params.movieData.title,
+                            headerStyle: {
+                                backgroundColor: '#000000',
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            }
+                        })}
                         />
                 </>
                 :
