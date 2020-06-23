@@ -1,4 +1,5 @@
 import * as moviesConstants from 'store/constants/movies.constants';
+import { uniqBy } from 'lodash';
 
 const initialState = {
     popularMoviesList: [],
@@ -26,7 +27,7 @@ const authReducer = (state = initialState, { type, payload }) => {
             return { ...state, loading: false, favouriteMovies: payload.favouriteMovies,
                 popularMoviesList: payload.popularMoviesList, popularMoviesTotalPages: payload.popularMoviesTotalPages }
         case moviesConstants.GET_MORE_POPULAR_MOVIES_LIST_SUCCESS:
-            return { ...state, popularMoviesList: [...state.popularMoviesList, ...payload.popularMoviesList],
+            return { ...state, popularMoviesList: uniqBy([...state.popularMoviesList, ...payload.popularMoviesList], item => item.id),
                 popularMoviesLastFetchedPage:  payload.popularMoviesLastFetchedPage, moreMoviesLoading: false }
                 
         case moviesConstants.GET_MORE_POPULAR_MOVIES_LIST_FAILED:
